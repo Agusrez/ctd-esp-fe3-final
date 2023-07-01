@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+
 
 const Detail = () => {
   const [dentista, setDentista] = useState('');
@@ -20,6 +20,13 @@ const Detail = () => {
       {console.log(dentista)}
       <h1>Detail Dentist</h1>
       <h1>dentista</h1>
+      <div style ={{ display: 'flex', justifyContent: 'center' }} >
+      <img
+          src="../images/doctor.jpg"
+          alt=""
+          style={{ width: '195px', borderRadius: '15px' }}
+        />
+      </div>
       <h3>Nombre: {dentista.name}</h3>
       <h3>Apellido: {dentista.username}</h3>
       <h3>Email: {dentista.email}</h3>
