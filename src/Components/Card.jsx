@@ -1,20 +1,66 @@
-import React from "react";
+import { Link } from 'react-router-dom';
+import { myRoutes } from '../Routes/utilties/myRoutes';
+import { useThemeStates } from '../Context/ThemeContext/ThemeContext';
+import { useFavState } from '../Context/FavsContext/FavContex';
 
+const Card = ({ item }) => {
+  const { theme } = useThemeStates();
+  const { favsState, favsDispatch } = useFavState();
 
-const Card = ({ name, username, id }) => {
+  const { name, username, id } = item;
 
-  const addFav = ()=>{
-    // Aqui iria la logica para agregar la Card en el localStorage
-  }
+  const addFav = () => {
+    const findFav = favsState.favs.find((favs) => favs.id === item.id);
+    if (!findFav) {
+      favsDispatch({ type: 'ADD_FAV', payload: item });
+    } else {
+      alert('Ya está agregado');
+    }
+  };
 
   return (
-    <div className="card">
-        {/* En cada card deberan mostrar en name - username y el id */}
+    <div className="containerCards">
+      <Link
+        to={`${myRoutes.detail}${item.id}`}
+        className="card"
+        style={{
+          background: theme.background,
+          color: theme.font,
+          borderRadius: '20px',
+          height: '400px',
+          width: '250px',
+        }}
+      >
 
-        {/* No debes olvidar que la Card a su vez servira como Link hacia la pagina de detalle */}
+        <img
+          src="./images/doctor.jpg"
+          alt=""
+          style={{ width: '195px', borderRadius: '15px' }}
+        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h3>{name}</h3>
+          <h5>user: {username}</h5>
+          <h5>user-id: {id}</h5>
+        </div>
+      </Link>
 
-        {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
-        <button onClick={addFav} className="favButton">Add fav</button>
+      <button
+        onClick={addFav}
+        className="favButton"
+        style={{
+          width: '70px',
+          background: theme.background,
+          color: theme.font,
+        }}
+      >
+        Add fav
+      </button>
     </div>
   );
 };

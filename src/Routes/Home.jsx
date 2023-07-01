@@ -1,17 +1,22 @@
-import React from 'react'
-import Card from '../Components/Card'
+import Card from '../Components/Card';
+import { useCardStates } from '../Context/FetchContext/fetchContext';
+import { useThemeStates } from '../Context/ThemeContext/ThemeContext';
 
 //Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
 
 const Home = () => {
+  const { cardState } = useCardStates();
+  const { theme } = useThemeStates();
+
   return (
-    <main className="" >
+    <main style={{ background: theme.background, color: theme.font, paddingBottom: '80px' }}>
       <h1>Home</h1>
-      <div className='card-grid'>
-        {/* Aqui deberias renderizar las cards */}
+      <div className="card-grid">
+        {cardState.cardList &&
+          cardState.cardList.map((item) => <Card key={item.id} item={item} />)}
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
